@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IMSA – Clinical Examination Workshop</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #f5f0e8; color: #1a1a1a; }
+
+  :root {
+    --maroon: #8B1A3C;
+    --maroon-dark: #6B1230;
+    --maroon-light: #B5254E;
+    --cream: #F5F0E8;
+    --cream-dark: #E8E0D0;
+    --gold: #C8932A;
+    --text-dark: #1a1a1a;
+    --text-muted: #5a5a5a;
+  }
+
+  .page { background: var(--cream); min-height: 100vh; }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.from-left  { transform: translateX(-40px); }
+  .reveal.from-right { transform: translateX(40px); }
+  .reveal.scale-in   { transform: scale(0.93); }
+  .reveal.visible {
+    opacity: 1;
+    transform: translate(0,0) scale(1);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--maroon-dark);
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 3px solid var(--gold);
+  }
+  .header-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px;
+  }
+  .logo-area { display: flex; align-items: center; gap: 12px; }
+  .logo-circle {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: white; display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--gold); overflow: hidden;
+  }
+  .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+  .logo-text { color: white; }
+  .logo-text .org-name { font-size: 18px; font-weight: 800; letter-spacing: 1px; }
+  .logo-text .org-sub { font-size: 10px; color: #d4b896; letter-spacing: 0.5px; text-transform: uppercase; }
+  .header-cta {
+    background: var(--gold); color: white; border: none;
+    padding: 9px 20px; border-radius: 6px; font-size: 13px; font-weight: 700;
+    cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase;
+    text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s;
+  }
+  .header-cta:hover { background: #a87520; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #6B1230 0%, #8B1A3C 50%, #6B1230 100%);
+    padding: 70px 24px 56px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .hero-tag {
+    display: inline-block; background: var(--gold); color: white;
+    padding: 5px 16px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px;
+    animation: fadeDown 0.7s ease both;
+  }
+  .hero h1 {
+    font-size: 48px; font-weight: 900; color: white; line-height: 1.1;
+    text-transform: uppercase; letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-stethoscope { font-size: 44px; color: #e8d4c0; display: inline-flex; align-items: center; }
+  .hero-tagline {
+    font-size: 14px; color: #e8d5c4; margin-top: 12px;
+    letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-divider {
+    width: 60px; height: 3px; background: var(--gold);
+    margin: 20px auto;
+    animation: expandWidth 0.7s 0.4s ease both;
+  }
+
+  @keyframes fadeDown { from { opacity:0; transform: translateY(-20px); } to { opacity:1; transform: translateY(0); } }
+  @keyframes fadeUp   { from { opacity:0; transform: translateY(24px);  } to { opacity:1; transform: translateY(0); } }
+  @keyframes expandWidth { from { width: 0; opacity:0; } to { width: 60px; opacity:1; } }
+
+  /* ── MAIN ── */
+  .main { max-width: 960px; margin: 0 auto; padding: 40px 24px; }
+
+  .section-title {
+    font-size: 15px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--maroon); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--maroon); opacity: 0.2; }
+
+  /* ── QUOTE ── */
+  .quote-band {
+    background: #f0e8d8; border-left: 4px solid var(--maroon);
+    padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 32px;
+    font-size: 15px; font-style: italic; font-weight: 500; color: var(--maroon-dark);
+  }
+
+  /* ── ABOUT US ── */
+  .about-card {
+    background:  linear-gradient(135deg, #001f3f, #0b4f7d, #2a7db8); border-radius: 16px;
+    padding: 32px 28px; margin-bottom: 32px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .about-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='40' cy='40' r='6'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .about-top {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    margin-bottom: 20px; position: relative; z-index: 1; flex-wrap: wrap;
+  }
+  .about-logo {
+    width: 100px; height: 100px; border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.4);
+    overflow: hidden; flex-shrink: 0; background: white;
+    transition: transform 0.4s ease;
+  }
+  .about-logo:hover { transform: rotate(5deg) scale(1.05); }
+  .about-logo img { width: 100%; height: 100%; object-fit: cover; }
+  .about-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold); color: white;
+    padding: 8px 20px; border-radius: 24px;
+    font-size: 16px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .about-badge i { font-size: 22px; }
+  .about-text {
+    font-size: 16px; font-weight: 600; color: white;
+    line-height: 1.75; max-width: 620px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+
+  /* ── SPEAKER ── */
+  .speaker-card {
+    background: white; border-radius: 12px; border: 1px solid #e0d5c8;
+    padding: 28px; display: flex; gap: 24px; align-items: center; margin-bottom: 32px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .speaker-card:hover { box-shadow: 0 8px 32px rgba(139,26,60,0.12); transform: translateY(-3px); }
+  .speaker-avatar {
+    width: 110px; height: 110px; border-radius: 50%; flex-shrink: 0;
+    border: 3px solid var(--maroon); overflow: hidden;
+    background: var(--cream-dark);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.4s ease;
+    transform: scale(1.12) translateY(-6px);
+  }
+  .speaker-card:hover .speaker-avatar { transform: scale(1.06); }
+  .speaker-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; scale: 1.5; transform: scale(1.12) translateY(-6px);}
+  .speaker-avatar .fallback { font-size: 32px; font-weight: 800; color: var(--maroon); }
+  .speaker-info .name { font-size: 22px; font-weight: 800; color: var(--maroon); margin-bottom: 4px; }
+  .speaker-info .title { font-size: 14px; color: var(--text-muted); margin-bottom: 12px; }
+  .speaker-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .speaker-tag {
+    background: #f5eef0; color: var(--maroon);
+    padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    border: 1px solid #e8d0d8;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .speaker-tag:hover { background: #ead0d8; transform: scale(1.04); }
+
+  /* ── DETAILS ── */
+  .details-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; margin-bottom: 32px;
+  }
+  .detail-card {
+    background: white; border-radius: 10px; border: 1px solid #e0d5c8;
+    padding: 20px; display: flex; flex-direction: column; gap: 6px;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .detail-card:hover { box-shadow: 0 6px 24px rgba(139,26,60,0.1); transform: translateY(-4px); }
+  .detail-icon { font-size: 24px; }
+  .detail-label { font-size: 11px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .detail-value { font-size: 17px; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
+
+  /* ── HIGHLIGHTS ── */
+  .highlights {
+    background: var(--maroon-dark); border-radius: 12px;
+    padding: 28px; margin-bottom: 32px;
+  }
+  .highlights .section-title { color: #e8d4c0; }
+  .highlights .section-title::after { background: #e8d4c0; opacity: 0.2; }
+  .highlight-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .highlight-item {
+    background: rgba(255,255,255,0.07); border-radius: 8px;
+    padding: 16px; border: 1px solid rgba(255,255,255,0.1);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .highlight-item:hover { background: rgba(255,255,255,0.13); transform: translateY(-3px); }
+  .highlight-item .h-title { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+  .highlight-item .h-sub { font-size: 12px; color: #c8b8a8; line-height: 1.4; }
+
+  /* ── PERKS ── */
+  .perks { display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; }
+  .perk {
+    background: white; border-radius: 8px; border: 1px solid #e0d5c8;
+    padding: 14px 18px; display: flex; align-items: center; gap: 10px; flex: 1; min-width: 180px;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .perk:hover { box-shadow: 0 4px 16px rgba(139,26,60,0.1); transform: translateY(-3px); }
+  .perk-icon { font-size: 20px; color: var(--maroon); }
+  .perk-text { font-size: 13px; font-weight: 500; color: var(--text-dark); line-height: 1.4; }
+
+  /* ── COUNTDOWN ── */
+  .countdown-section {
+    background: white; border-radius: 12px; border: 1px solid #e0d5c8;
+    padding: 28px; text-align: center; margin-bottom: 32px;
+  }
+  .countdown-title { font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--maroon); margin-bottom: 20px; }
+  .countdown-grid { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .countdown-unit { text-align: center; min-width: 70px; }
+  .countdown-num {
+    display: block; font-size: 42px; font-weight: 900; color: var(--maroon); line-height: 1;
+    background: var(--cream); border-radius: 10px; padding: 10px 8px;
+    border: 2px solid #e0d5c8; min-width: 72px;
+    transition: transform 0.15s ease;
+  }
+  .countdown-num.tick { transform: scale(1.08); }
+  .countdown-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-top: 8px; display: block; }
+  .countdown-sep { font-size: 36px; font-weight: 900; color: var(--maroon); align-self: center; margin-top: -10px; }
+  .countdown-ended {
+    font-size: 18px; font-weight: 700; color: var(--maroon);
+    padding: 16px; background: #f5eef0; border-radius: 10px;
+    border: 2px solid #e8d0d8;
+  }
+
+  /* ── CTA ── */
+  .cta-section { text-align: center; margin-bottom: 40px; }
+  .cta-heading { font-size: 18px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
+  .cta-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+  .cta-btn {
+    display: inline-block; background: var(--maroon); color: white;
+    padding: 16px 48px; border-radius: 8px; font-size: 16px; font-weight: 800;
+    text-decoration: none; letter-spacing: 1px; text-transform: uppercase;
+    border: none; cursor: pointer; transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(139,26,60,0.3);
+  }
+  .cta-btn:hover { background: var(--maroon-light); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(139,26,60,0.4); }
+  .cta-btn:active { transform: translateY(0); }
+  .cta-note { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
+
+  /* ── FOOTER ── */
+  .footer { background: var(--maroon-dark); padding: 28px 24px; border-top: 3px solid var(--gold); }
+  .footer-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-left { color: #c8b8a8; font-size: 12px; line-height: 1.8; }
+  .footer-left strong { color: white; font-size: 14px; }
+  .footer-links { display: flex; gap: 12px; }
+  .footer-link {
+    display: flex; align-items: center; gap: 7px; color: white; text-decoration: none;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .footer-link:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+  .footer-link i { font-size: 16px; }
+  .yt { color: #ff4444; }
+  .wa { color: #25D366; }
+  .li { color: #0A66C2; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 28px; }
+    .hero-stethoscope { font-size: 28px; }
+    .speaker-card { flex-direction: column; text-align: center; }
+    .speaker-tags { justify-content: center; }
+    .header-inner { flex-direction: column; gap: 10px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .countdown-sep { display: none; }
+    .about-top { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-circle">
+          <img src="imsa-logo.jpeg" alt="IMSA Logo" onerror="this.style.display='none'" />
+        </div>
+        <div class="logo-text">
+          <div class="org-name">IMSA</div>
+          <div class="org-sub">Initiative of Medicos for Service & Academics</div>
+        </div>
+      </div>
+      <a href="https://forms.example.com/imsa-workshop" class="header-cta" target="_blank">Register Now</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">IMSA Presents</span>
+      <h1>
+        <span class="hero-stethoscope"><i class="ti ti-stethoscope" aria-hidden="true"></i></span>
+        Clinical Examination<br><span>Workshop</span>
+      </h1>
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">The Clinical Edge Where Diagnosis Begins</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <p class="quote-band reveal from-left">
+      "The difference between a good doctor and a great one lies in the details. Learn them before the seats run out."
+    </p>
+
+    <div class="about-card reveal scale-in">
+      <div class="about-top">
+        <div class="about-logo">
+          <img src="imsa-logo.jpeg" alt="IMSA Logo" onerror="this.style.display='none'" />
+        </div>
+        <div class="about-badge">
+          <i class="ti ti-info-circle" aria-hidden="true"></i> About Us
+        </div>
+      </div>
+      <p class="about-text">
+        IMSA is a Non-Profit initiative taken by Medicos from all over Telangana with an aim to create a unified platform for medical students, working towards Self Improvement and Upliftment of the Society under the light of Divine Guidance of Islam.
+      </p>
+    </div>
+
+    <p class="section-title reveal">Featured Speaker</p>
+    <div class="speaker-card reveal from-left">
+      <div class="speaker-avatar" id="speaker-avatar">
+        <img src="speaker.jpeg" alt="Dr Syed Obaidullah Junaid"
+          onerror="this.style.display='none'; document.getElementById('speaker-fallback').style.display='flex';" />
+        <span class="fallback" id="speaker-fallback" style="display:none;">SJ</span>
+      </div>
+      <div class="speaker-info">
+        <div class="name">Dr Syed Obaidullah Junaid</div>
+        <div class="title">Consultant Pulmonologist, Riyadh, KSA</div>
+        <div class="speaker-tags">
+          <span class="speaker-tag">Pulmonologist — Riyadh, KSA</span>
+          <span class="speaker-tag">President, DAAME</span>
+          <span class="speaker-tag">Community Health Advocate</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-title reveal">Event Details</p>
+    <div class="details-grid">
+      <div class="detail-card reveal reveal-delay-1">
+        <span class="detail-icon">📅</span>
+        <span class="detail-label">Date</span>
+        <span class="detail-value">21st June 2025<br><small style="font-size:13px;color:#888;font-weight:500;">Sunday</small></span>
+      </div>
+      <div class="detail-card reveal reveal-delay-2">
+        <span class="detail-icon">🕛</span>
+        <span class="detail-label">Timings</span>
+        <span class="detail-value">12:00 PM – 4:00 PM</span>
+      </div>
+      <div class="detail-card reveal reveal-delay-3">
+        <span class="detail-icon">📍</span>
+        <span class="detail-label">Venue</span>
+        <span class="detail-value">Muslim General Hospital, Tolichowki</span>
+      </div>
+    </div>
+
+    <div class="highlights reveal scale-in">
+      <p class="section-title">Workshop Highlights</p>
+      <div class="highlight-list">
+        <div class="highlight-item">
+          <div class="h-title">History Taking</div>
+          <div class="h-sub">Knowing the story behind symptoms</div>
+        </div>
+        <div class="highlight-item">
+          <div class="h-title">Communication Skills</div>
+          <div class="h-sub">Decoding the patient</div>
+        </div>
+        <div class="highlight-item">
+          <div class="h-title">Clinical Signs & Examination Pearls</div>
+          <div class="h-sub">Clinical skills that save lives</div>
+        </div>
+        <div class="highlight-item">
+          <div class="h-title">Clinical Judgment & Decision Making</div>
+          <div class="h-sub">The diagnostic playbook</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-title reveal">Attendee Perks</p>
+    <div class="perks">
+      <div class="perk reveal reveal-delay-1">
+        <span class="perk-icon"><i class="ti ti-certificate" aria-hidden="true"></i></span>
+        <span class="perk-text">Certificates provided to all attendees</span>
+      </div>
+      <div class="perk reveal reveal-delay-2">
+        <span class="perk-icon"><i class="ti ti-tools-kitchen-2" aria-hidden="true"></i></span>
+        <span class="perk-text">Snacks included</span>
+      </div>
+      <div class="perk reveal reveal-delay-3">
+        <span class="perk-icon"><i class="ti ti-users" aria-hidden="true"></i></span>
+        <span class="perk-text">Valuable networking with peers</span>
+      </div>
+    </div>
+
+    <div class="countdown-section reveal scale-in">
+      <div class="countdown-title">⏳ Event Countdown</div>
+      <div id="countdown-body">
+        <div class="countdown-grid">
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-days">--</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <span class="countdown-sep">:</span>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-hours">--</span>
+            <span class="countdown-label">Hours</span>
+          </div>
+          <span class="countdown-sep">:</span>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-mins">--</span>
+            <span class="countdown-label">Minutes</span>
+          </div>
+          <span class="countdown-sep">:</span>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-secs">--</span>
+            <span class="countdown-label">Seconds</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section reveal">
+      <div class="cta-heading">Secure your spot today</div>
+      <div class="cta-sub">Limited seats available — don't miss this chance to sharpen your clinical edge.</div>
+      <a href="https://forms.example.com/imsa-workshop" class="cta-btn" target="_blank">Register Here →</a>
+      <div class="cta-note">Free registration · Certificates + Snacks provided</div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>IMSA</strong><br>
+        Initiative of Medicos for Service &amp; Academics<br>
+      </div>
+      <div class="footer-links">
+        <a href="https://youtube.com/@IMSAOFFICIAL99" class="footer-link" target="_blank">
+          <i class="ti ti-brand-youtube yt" aria-hidden="true"></i> YouTube
+        </a>
+        <a href="https://whatsapp.com/channel/0029VaWAXCU3QxRwfDBYTi2V" class="footer-link" target="_blank">
+          <i class="ti ti-brand-whatsapp wa" aria-hidden="true"></i> WhatsApp
+        </a>
+        <a href="https://www.linkedin.com/company/imsa-initiative-of-medicos-for-service-and-academics/" class="footer-link" target="_blank">
+          <i class="ti ti-brand-linkedin li" aria-hidden="true"></i> LinkedIn
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  /* ── SCROLL REVEAL ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ── COUNTDOWN ── */
+  const EVENT_DATE = new Date('2026-06-21T12:00:00');
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = EVENT_DATE - now;
+
+    if (diff <= 0) {
+      document.getElementById('countdown-body').innerHTML =
+        '<div class="countdown-ended">🎉 This event has taken place. Stay tuned for upcoming IMSA events!</div>';
+      return;
+    }
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    const set = (id, val) => {
+      const el = document.getElementById(id);
+      const newVal = String(val).padStart(2, '0');
+      if (el.textContent !== newVal) {
+        el.textContent = newVal;
+        el.classList.remove('tick');
+        void el.offsetWidth;
+        el.classList.add('tick');
+        setTimeout(() => el.classList.remove('tick'), 150);
+      }
+    };
+
+    set('cd-days',  d);
+    set('cd-hours', h);
+    set('cd-mins',  m);
+    set('cd-secs',  s);
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
