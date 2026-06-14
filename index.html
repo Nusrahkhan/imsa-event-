@@ -260,6 +260,36 @@
     border: 2px solid #e8d0d8;
   }
 
+  .member-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #6d4c06, #d9a63b, #6d4c06);;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.member-btn:hover {
+  background: linear-gradient(135deg, #6d4c06, #d9a63b);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+}
+
+.member-btn i {
+  font-size: 18px;
+}
+
   /* ── CTA ── */
   .cta-section { text-align: center; margin-bottom: 40px; }
   .cta-heading { font-size: 18px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
@@ -356,6 +386,10 @@
       <p class="about-text">
         IMSA is a Non-Profit initiative taken by Medicos from all over Telangana with an aim to create a unified platform for medical students, working towards Self Improvement and Upliftment of the Society under the light of Divine Guidance of Islam.
       </p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScqbCrnxY0U1wxo1cq8wPhx-vs5n-9JU0LpxZfUzj2mutKO5g/viewform?usp=sf_link" class="member-btn" target="_blank">
+        <i class="ti ti-user-plus" aria-hidden="true"></i>
+        Become a Member
+      </a>
     </div>
 
     <p class="section-title reveal">Featured Speaker</p>
@@ -381,7 +415,7 @@
       <div class="detail-card reveal reveal-delay-1">
         <span class="detail-icon">📅</span>
         <span class="detail-label">Date</span>
-        <span class="detail-value">21st June 2025<br><small style="font-size:13px;color:#888;font-weight:500;">Sunday</small></span>
+        <span class="detail-value">21st June 2026<br><small style="font-size:13px;color:#888;font-weight:500;">Sunday</small></span>
       </div>
       <div class="detail-card reveal reveal-delay-2">
         <span class="detail-icon">🕛</span>
@@ -485,6 +519,9 @@
         </a>
         <a href="https://www.linkedin.com/company/imsa-initiative-of-medicos-for-service-and-academics/" class="footer-link" target="_blank">
           <i class="ti ti-brand-linkedin li" aria-hidden="true"></i> LinkedIn
+        </a>
+        <a class="footer-link" target="_blank">
+          <i class="ti li" aria-hidden="true"></i> Contact Us: +91 63049 10714
         </a>
       </div>
     </div>
