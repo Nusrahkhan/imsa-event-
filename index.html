@@ -290,6 +290,43 @@
   font-size: 18px;
 }
 
+.pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #8B1A3C, #B5254E);
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+
+  position: relative;
+  z-index: 1;
+
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+  .pdf-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  }
+
+  .pdf-btn i {
+    font-size: 18px;
+  }
+
+  .member-btn,
+.pdf-btn {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
   /* ── CTA ── */
   .cta-section { text-align: center; margin-bottom: 40px; }
   .cta-heading { font-size: 18px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
@@ -326,16 +363,63 @@
   .wa { color: #25D366; }
   .li { color: #0A66C2; }
 
-  @media (max-width: 600px) {
-    .hero h1 { font-size: 28px; }
-    .hero-stethoscope { font-size: 28px; }
-    .speaker-card { flex-direction: column; text-align: center; }
-    .speaker-tags { justify-content: center; }
-    .header-inner { flex-direction: column; gap: 10px; }
-    .footer-inner { flex-direction: column; align-items: flex-start; }
-    .countdown-sep { display: none; }
-    .about-top { flex-direction: column; }
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 28px;
   }
+
+  .hero-stethoscope {
+    font-size: 28px;
+  }
+
+  .speaker-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .speaker-tags {
+    justify-content: center;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Improved Footer */
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .footer-left {
+    text-align: center;
+  }
+
+  .footer-links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-link {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    word-break: break-word;
+  }
+
+  .countdown-sep {
+    display: none;
+  }
+
+  .about-top {
+    flex-direction: column;
+  }
+}
 </style>
 </head>
 <body>
@@ -390,6 +474,10 @@
         <i class="ti ti-user-plus" aria-hidden="true"></i>
         Become a Member
       </a>
+      <a href="org.pdf" class="pdf-btn" target="_blank">
+        <i class="ti ti-file-text"></i>
+        Open Organization PDF
+      </a>
     </div>
 
     <p class="section-title reveal">Featured Speaker</p>
@@ -420,7 +508,7 @@
       <div class="detail-card reveal reveal-delay-2">
         <span class="detail-icon">🕛</span>
         <span class="detail-label">Timings</span>
-        <span class="detail-value">12:00 PM – 4:00 PM</span>
+        <span class="detail-value">1:00 PM – 4:00 PM</span>
       </div>
       <div class="detail-card reveal reveal-delay-3">
         <span class="detail-icon">📍</span>
